@@ -48,9 +48,6 @@ RegisterCommand("lp", function(source, args)
         SetBlipSprite(blip, 480)
         SetBlipColour(blip, 1)
         SetNewWaypoint(targetCoords.x, targetCoords.y)
-        -- TriggerEvent('chat:addMessage', {
-            -- args = {'^1[Police] ^4- ^7Person detected and marked in your gps.'}
-        -- })
 		TriggerEvent("notification", "Person detected and marked in your gps!",1)
         Citizen.CreateThread(function()
             while true do
@@ -64,14 +61,8 @@ RegisterCommand("lp", function(source, args)
             end
         end)
     elseif isPolice == '1' then
-        -- TriggerEvent('chat:addMessage', {
-            -- args = {'^1[Police] ^4- ^7The Person you tryed to find doesnt have a phone on him.'}
-        -- })
 		TriggerEvent("notification", "The Person you tryed to locate doesnt have a phone on him!",2)
     else
-        -- TriggerEvent('chat:addMessage', {
-            -- args = {'^1[Police] ^4- ^7You are not a policeman.'}
-        -- })
 		TriggerEvent("notification", "You are not a Police Officer!",2)
     end
 end)
