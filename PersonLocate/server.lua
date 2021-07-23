@@ -14,7 +14,7 @@ AddEventHandler("HasPhone", function(data)
             TriggerClientEvent('IsPolice',source,isPolice)
         end
         print(xPlayer.getInventoryItem('phone').count)
-        if sPlayer.job.name == 'police' and xPlayer.getInventoryItem('phone').count > 0 then
+        if sPlayer.job.name == 'police' and xPlayer.getInventoryItem('phone').count > 0 then -- Here you can change the job from police to want you want the job to be.
             hasPhone = '1'
 		    TriggerClientEvent('HavePhone',source,hasPhone)
             local PlayerPed = GetPlayerPed(data)
