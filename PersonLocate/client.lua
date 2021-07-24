@@ -9,15 +9,18 @@ Citizen.CreateThread(function()
         end
     end
 end)
-local targetCoordsFromEvent
-local isPolice
-local havePhone
 
+-- variables --
+
+local targetCoordsFromEvent, isPolice, havePhone
+
+-- commands suggestions --
 
 Citizen.CreateThread(function()
     TriggerEvent('chat:addSuggestion', '/locate', 'Locate Person', {{ name="id", help="The target id" },})
 end)
 
+-- self events --
 
 RegisterNetEvent('HavePhone')
 AddEventHandler('HavePhone', function(data)
@@ -34,6 +37,7 @@ AddEventHandler('IsPolice', function(data)
     isPolice = data
 end)
 
+-- commands --
 
 RegisterCommand("locate", function(source, args)
     local playerID = args[1]
@@ -49,9 +53,7 @@ RegisterCommand("locate", function(source, args)
         Citizen.CreateThread(function()
             while true do
                 Citizen.Wait(0)
-                local playerPed = PlayerPedId()
-                local coords = GetEntityCoords(playerPed)
-                if #(coords-targetCoordsFromEvent) < 10.0 then
+                if #(GetEntityCoords(PlayerPedId())-targetCoordsFromEvent) < 10.0 then
                         RemoveBlip(blip)
                 end
             end
@@ -63,7 +65,7 @@ RegisterCommand("locate", function(source, args)
     end
 end)
 
-
+-- events -- 
 
 AddEventHandler('onResourceStop', function(resource)
 	if resource == GetCurrentResourceName() then
