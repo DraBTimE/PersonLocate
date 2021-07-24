@@ -1,11 +1,3 @@
--- [ Made By DraBTimE.#1342 ] --]
------------------------------------]
------------------------------------]
-
-
-
-
-
 ESX = nil
 
 Citizen.CreateThread(function()
@@ -20,6 +12,12 @@ end)
 local targetCoordsFromEvent
 local isPolice
 local havePhone
+
+
+Citizen.CreateThread(function()
+    TriggerEvent('chat:addSuggestion', '/locate', 'Locate Person', {{ name="id", help="The target id" },})
+end)
+
 
 RegisterNetEvent('HavePhone')
 AddEventHandler('HavePhone', function(data)
@@ -37,33 +35,41 @@ AddEventHandler('IsPolice', function(data)
 end)
 
 
-RegisterCommand("lp", function(source, args)
+RegisterCommand("locate", function(source, args)
     local playerID = args[1]
     local playerPed = GetPlayerPed(source)
     TriggerServerEvent("HasPhone", playerID)
     Wait(300)
-    if havePhone == '1' then
-        local targetCoords = targetCoordsFromEvent
-        blip = AddBlipForCoord(targetCoords.x, targetCoords.y, targetCoords.z)
+    print(isPolice)
+    print(havePhone)
+    print(targetCoordsFromEvent)
+    if havePhone and isPolice then
+        blip = AddBlipForCoord(targetCoordsFromEvent.x, targetCoordsFromEvent.y, targetCoordsFromEvent.z)
         SetBlipSprite(blip, 480)
         SetBlipColour(blip, 1)
-        SetNewWaypoint(targetCoords.x, targetCoords.y)
+        SetNewWaypoint(targetCoordsFromEvent.x, targetCoordsFromEvent.y)
 		TriggerEvent("notification", "Person detected and marked in your gps!",1)
         Citizen.CreateThread(function()
             while true do
                 Citizen.Wait(0)
                 local playerPed = PlayerPedId()
                 local coords = GetEntityCoords(playerPed)
-        
-                if GetDistanceBetweenCoords(coords, targetCoords.x, targetCoords.y, targetCoords.z, true) < 10.0 then
+                if #(coords-targetCoordsFromEvent) < 10.0 then
                         RemoveBlip(blip)
                 end
             end
         end)
-    elseif isPolice == '1' then
+    elseif isPolice then
 		TriggerEvent("notification", "The Person you tryed to locate doesnt have a phone on him!",2)
     else
 		TriggerEvent("notification", "You are not a Police Officer!",2)
     end
 end)
 
+
+
+AddEventHandler('onResourceStop', function(resource)
+	if resource == GetCurrentResourceName() then
+		TriggerEvent('chat:removeSuggestion', '/locate')
+	end
+end)
