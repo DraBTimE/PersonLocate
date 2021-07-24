@@ -12,7 +12,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(10)
         if ESX == nil then
-            TriggerEvent('coward:getSharedObject', function(obj) ESX = obj end)
+            TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
             Citizen.Wait(200)
         end
     end
