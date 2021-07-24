@@ -1,5 +1,5 @@
 ESX = nil
-TriggerEvent('coward:getSharedObject', function(obj) ESX = obj end)
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 
 RegisterNetEvent("HasPhone")
