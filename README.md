@@ -5,6 +5,6 @@ if you are a policeman and the target you are trying to locate have a phone its 
 
 Command: /locate
 
-Video: https://streamable.com/fgybkx
+[Preview](https://streamable.com/fgybkx)
 
 
